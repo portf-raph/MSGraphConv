@@ -1,0 +1,8 @@
+in_channels: 3
+out_channels: 128
+K: 6
+scales: [0.1, 1, 10]
+improved: false
+add_self_loops: false
+vec_scaling: true
+readout: false

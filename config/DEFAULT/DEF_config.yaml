@@ -1,0 +1,30 @@
+---
+exp_name: msg_convnet
+exp_dir: exp/msg_convnet
+use_gpu: true
+gpus: [0]
+seed: 1234
+dataset:
+  name: synthetic
+model:
+  name: LanczosNetGeneral
+train:
+  optimizer: Adam
+  lr_decay: 0.1
+  lr_decay_steps: [10000]
+  num_workers: 0
+  max_epoch: 200
+  batch_size: 10
+  display_iter: 10
+  snapshot_epoch: 10000
+  valid_epoch: 10
+  lr: 1.0e-4
+  wd: 0.0e-4
+  momentum: 0.9
+  shuffle: true
+  is_resume: false
+  resume_model: None
+test:  
+  batch_size: 32
+  num_workers: 0
+  test_model: None

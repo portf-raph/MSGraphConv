@@ -65,7 +65,6 @@ class MSGConv(MessagePassing):
                 add_self_loops=self.add_self_loops,
             )
 
-
         elif isinstance(edge_index, SparseTensor):
             edge_index = gcn_norm(
                 edge_index=edge_index, edge_weight=edge_weight,
@@ -100,7 +99,6 @@ class MSGConv(MessagePassing):
             convs_stack = torch.stack(convs)                                  # (K, num_nodes, out_channels)
             convs_stack = convs_stack.unsqueeze(0)                            # (1, K, num_nodes, out_channels)
             scales = scales.view(len(self.scales), self.K, 1, 1)              # (len(self.scales), K, 1, 1)
-
             out = (convs_stack * scales).sum(dim=1)                           # (len(self.scales), num_nodes, out_channels)
 
         if self.readout:
@@ -112,13 +110,11 @@ class MSGConv(MessagePassing):
             for i in range(len(self.scales)):
                 batched_img.append(global_mean_pool(out[i], batch=batch, size=batch_size)) # (batch_size, out_channels)
 
-            batched_img = torch.stack(batched_img)                                         # (scale, (batch_size, out_channels))
-            return torch.permute(batched_img, (1, 0, 2))                                   # (batch_size, (scale, out_channels))
+            batched_img = torch.stack(batched_img)                                         # (len(self.scales), batch_size, out_channels)
+            return torch.permute(batched_img, (1, 0, 2))                                   # (batch_size, len(self.scales), out_channels)
 
-        return out
+        return out    # (len(self.scales), num_nodes, out_channels)
 
 
     def message(self, x_j: Tensor, edge_weight: Tensor) -> Tensor:
         return edge_weight.view(-1,1) * x_j
-
-

@@ -1,0 +1,33 @@
+dataset:
+  name: synthetic
+exp_dir: exp/msg_convnet
+exp_name: LanczosNetGeneral_synthetic_2024-Sep-03-20-50-21_24216
+gpus:
+- 0
+model:
+  name: LanczosNetGeneral
+run_id: '24216'
+save_dir: exp/msg_convnet/LanczosNetGeneral_synthetic_2024-Sep-03-20-50-21_24216
+seed: 1234
+test:
+  batch_size: 32
+  num_workers: 0
+  test_model: None
+train:
+  batch_size: 10
+  display_iter: 10
+  is_resume: false
+  lr: 0.0001
+  lr_decay: 0.1
+  lr_decay_steps:
+  - 10000
+  max_epoch: 200
+  momentum: 0.9
+  num_workers: 0
+  optimizer: Adam
+  resume_model: None
+  shuffle: true
+  snapshot_epoch: 10000
+  valid_epoch: 10
+  wd: 0.0
+use_gpu: true
